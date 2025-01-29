@@ -51,25 +51,13 @@ fi
 # We use "plasma" as "desktop" to hook up to SteamOS's scripts
 case "$session" in
   plasma-wayland-persistent)
-    if [[ ${BASE_IMAGE_NAME} == 'kinoite' ]]; then
-      session_launcher="plasma.desktop"
-    elif [[ ${BASE_IMAGE_NAME} == 'silverblue' ]]; then
-      session_launcher="gnome-wayland.desktop"
-    fi
+    session_launcher="gnome-wayland.desktop"
   ;;
   plasma-x11-persistent)
-    if [[ ${BASE_IMAGE_NAME} == 'kinoite' ]]; then
-      session_launcher="plasmax11.desktop"
-    elif [[ ${BASE_IMAGE_NAME} == 'silverblue' ]]; then
-      session_launcher="gnome-xorg.desktop"
-    fi
+    session_launcher="gnome-xorg.desktop"
   ;;
   desktop|plasma)
-    if [[ ${BASE_IMAGE_NAME} == 'kinoite' ]]; then
-      session_launcher="plasma-steamos-wayland-oneshot.desktop"
-    elif [[ ${BASE_IMAGE_NAME} == 'silverblue' ]]; then
-      session_launcher="gnome-wayland-oneshot.desktop"
-    fi
+    session_launcher="gnome-wayland-oneshot.desktop"
     create_sentinel=1
   ;;
   gamescope)

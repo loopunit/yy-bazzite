@@ -45,21 +45,12 @@ sudoif rm -f "${project_root}/just_scripts/output/${tag}-${git_branch}.iso"
 sudoif rm -f "${project_root}/just_scripts/output/${tag}-${git_branch}.iso-CHECKSUM"
 
 # Set Base Image
-if [[ ${image} =~ "gnome" ]]; then
-    base_image="silverblue"
-else
-    base_image="kinoite"
-fi
+base_image="silverblue"
 
 # Set variant and flatpak dir
-if [[ "${base_image}" =~ "silverblue" ]]; then
-    flatpak_dir_shortname="installer/gnome_flatpaks"
-elif [[ "${base_image}" =~ "kinoite" ]]; then
-    flatpak_dir_shortname="installer/kde_flatpaks"
-else
-    exit 1
-fi
-variant="Kinoite"
+flatpak_dir_shortname="installer/gnome_flatpaks"
+
+variant="Silverblue"
 if [[ ${target} =~ "deck" ]]; then
     extra_boot_params="inst.resolution=1280x800"
 fi

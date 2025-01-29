@@ -13,9 +13,7 @@ fi
 
 valid_images=(
     silverblue
-    kinoite
     gnome
-    kde
 )
 image=${image,,}
 if [[ ! ${valid_images[*]} =~ ${image} ]]; then
@@ -34,10 +32,8 @@ if [[ ! ${valid_targets[*]} =~ ${target} ]]; then
     exit 1
 fi
 
-desktop=""
-if [[ ${image} == "gnome" || ${image} == "silverblue" ]]; then
-    desktop="-gnome"
-fi
+desktop="-gnome"
+
 image="${target}${desktop}"
 if [[ ${image} =~ "nvidia" ]]; then
     image="bazzite${desktop}-nvidia"

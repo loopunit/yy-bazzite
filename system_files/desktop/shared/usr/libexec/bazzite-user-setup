@@ -72,61 +72,44 @@ fi
 # doesn't get their Ptyxis config wiped out.
 if [[ ! -f "$BAZZITE_CONFIG_DIR/ptyxis-initialized" ]]; then
   echo 'Configuring Ptyxis'
-  if [[ $BASE_IMAGE_NAME =~ "kinoite" ]]; then
-    dconf load / < /usr/share/ublue-os/dconfs/desktop-kinoite/zz0-00-bazzite-desktop-kinoite-global
-    dconf load / < /usr/share/ublue-os/dconfs/desktop-kinoite/00-bazzite-desktop-kinoite-ptyxis
-  fi
   touch "$BAZZITE_CONFIG_DIR/ptyxis-initialized"
 fi
 
-if [[ $BASE_IMAGE_NAME =~ "kinoite" ]]; then
-  echo 'Running setup for Kinoite'
+echo 'Running setup for Silverblue'
 
-  if [[ $IMAGE_NAME =~ "deck" || $IMAGE_NAME =~ "ally" ]]; then
-    echo 'Running setup for Kinoite on Steam Deck'
-    if [[ ! -f "$HOME/Desktop/Return.desktop" ]]; then
-      echo 'Re-creating return to gamemode shortcut'
-      mkdir -p $HOME/Desktop/
-      cp "/etc/skel/Desktop/Return.desktop" "$HOME/Desktop/Return.desktop"
-    fi
+if /usr/libexec/hwsupport/valve-hardware; then
+  if [[ ! -f "$BAZZITE_CONFIG_DIR/deck-initialized" ]]; then
+    echo 'Setting Deck logo menu'
+    dconf write /org/gnome/shell/extensions/Logo-menu/symbolic-icon true
+    dconf write /org/gnome/shell/extensions/Logo-menu/menu-button-icon-image 2
+    touch "$BAZZITE_CONFIG_DIR/deck-initialized"
   fi
-else
-  echo 'Running setup for Silverblue'
-
-  if /usr/libexec/hwsupport/valve-hardware; then
-    if [[ ! -f "$BAZZITE_CONFIG_DIR/deck-initialized" ]]; then
-      echo 'Setting Deck logo menu'
-      dconf write /org/gnome/shell/extensions/Logo-menu/symbolic-icon true
-      dconf write /org/gnome/shell/extensions/Logo-menu/menu-button-icon-image 2
-      touch "$BAZZITE_CONFIG_DIR/deck-initialized"
+elif [[ ":83E1:" =~ ":$SYS_ID:" ]]; then
+  if [[ ! -f "$BAZZITE_CONFIG_DIR/legion-initialized" ]]; then
+    echo 'Setting Legion logo menu'
+    dconf write /org/gnome/shell/extensions/Logo-menu/symbolic-icon true
+    dconf write /org/gnome/shell/extensions/Logo-menu/menu-button-icon-image 5
+    touch "$BAZZITE_CONFIG_DIR/legion-initialized"
+  fi
+elif [[ ":ROG Ally RC71L:ROG Ally X RC72LA:" =~ ":$SYS_ID:" ]]; then
+  if [[ ! -f "$BAZZITE_CONFIG_DIR/ally-initialized" ]]; then
+    echo 'Setting Ally logo menu'
+    dconf write /org/gnome/shell/extensions/Logo-menu/symbolic-icon true
+    dconf write /org/gnome/shell/extensions/Logo-menu/menu-button-icon-image 6
+    touch "$BAZZITE_CONFIG_DIR/ally-initialized"
+  fi
+elif [[ ":Framework:" =~ ":$VEN_ID:" ]]; then
+  if [[ ! -f "$BAZZITE_CONFIG_DIR/framework-initialized" ]]; then
+    echo 'Setting Framework logo menu'
+    dconf write /org/gnome/shell/extensions/Logo-menu/symbolic-icon true
+    dconf write /org/gnome/shell/extensions/Logo-menu/menu-button-icon-image 4
+    echo 'Adjusting OSD position'
+    dconf write /org/gnome/shell/extensions/just-perfection/osd-position 4
+    if [[ $SYS_ID == "Laptop ("* ]]; then
+      echo 'Applying font fix for Framework 13'
+      dconf write /org/gnome/desktop/interface/text-scaling-factor 1.25
     fi
-  elif [[ ":83E1:" =~ ":$SYS_ID:" ]]; then
-    if [[ ! -f "$BAZZITE_CONFIG_DIR/legion-initialized" ]]; then
-      echo 'Setting Legion logo menu'
-      dconf write /org/gnome/shell/extensions/Logo-menu/symbolic-icon true
-      dconf write /org/gnome/shell/extensions/Logo-menu/menu-button-icon-image 5
-      touch "$BAZZITE_CONFIG_DIR/legion-initialized"
-    fi
-  elif [[ ":ROG Ally RC71L:ROG Ally X RC72LA:" =~ ":$SYS_ID:" ]]; then
-    if [[ ! -f "$BAZZITE_CONFIG_DIR/ally-initialized" ]]; then
-      echo 'Setting Ally logo menu'
-      dconf write /org/gnome/shell/extensions/Logo-menu/symbolic-icon true
-      dconf write /org/gnome/shell/extensions/Logo-menu/menu-button-icon-image 6
-      touch "$BAZZITE_CONFIG_DIR/ally-initialized"
-    fi
-  elif [[ ":Framework:" =~ ":$VEN_ID:" ]]; then
-    if [[ ! -f "$BAZZITE_CONFIG_DIR/framework-initialized" ]]; then
-      echo 'Setting Framework logo menu'
-      dconf write /org/gnome/shell/extensions/Logo-menu/symbolic-icon true
-      dconf write /org/gnome/shell/extensions/Logo-menu/menu-button-icon-image 4
-      echo 'Adjusting OSD position'
-      dconf write /org/gnome/shell/extensions/just-perfection/osd-position 4
-      if [[ $SYS_ID == "Laptop ("* ]]; then
-        echo 'Applying font fix for Framework 13'
-        dconf write /org/gnome/desktop/interface/text-scaling-factor 1.25
-      fi
-      touch "$BAZZITE_CONFIG_DIR/framework-initialized"
-    fi
+    touch "$BAZZITE_CONFIG_DIR/framework-initialized"
   fi
 
   echo 'Setting up templates'

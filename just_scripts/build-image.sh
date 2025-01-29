@@ -19,11 +19,7 @@ image=$2
 container_mgr=$(just _container_mgr)
 tag=$(just _tag "${image}")
 
-if [[ ${image} =~ "gnome" ]]; then
-    base_image="silverblue"
-else
-    base_image="kinoite"
-fi
+base_image="silverblue"
 
 if [[ ${target} =~ "nvidia" ]]; then
     flavor="nvidia"

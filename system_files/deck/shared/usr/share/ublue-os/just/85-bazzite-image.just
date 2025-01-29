@@ -21,13 +21,8 @@ get-emudeck:
     IMAGE_INFO="/usr/share/ublue-os/image-info.json"
     BASE_IMAGE_NAME=$(jq -r '."base-image-name"' < $IMAGE_INFO)
     echo 'Retrieving EmuDeck...'
-    if [[ ${BASE_IMAGE_NAME} == 'silverblue' ]]; then
-      wget https://www.emudeck.com/EmuDeck.desktop -O ~/.local/share/applications/EmuDeck.desktop
-      echo 'EmuDeck installer added to your application grid.'
-    else
-      wget https://www.emudeck.com/EmuDeck.desktop -O ~/Desktop/EmuDeck.desktop
-      echo 'EmuDeck installer added to your desktop.'
-    fi
+    wget https://www.emudeck.com/EmuDeck.desktop -O ~/.local/share/applications/EmuDeck.desktop
+    echo 'EmuDeck installer added to your application grid.'
 
 # Use EXT4 for SD Cards, allows use of SteamOS formatted SD cards
 switch-to-ext4:
@@ -181,14 +176,7 @@ restore-virtual-keyboard:
     #!/usr/bin/bash
     IMAGE_INFO="/usr/share/ublue-os/image-info.json"
     BASE_IMAGE_NAME=$(jq -r '."base-image-name"' < $IMAGE_INFO)
-    if [[ ${BASE_IMAGE_NAME} == 'silverblue' ]]; then
-      gnome-extensions disable block-caribou-36@lxylxy123456.ercli.dev
-    else
-      if [[ ! -f ~/.local/share/applications/com.github.maliit.keyboard.desktop ]]; then
-        mkdir -p ~/.local/share/applications/
-        cp /usr/share/ublue-os/backup/com.github.maliit.keyboard.desktop ~/.local/share/applications/com.github.maliit.keyboard.desktop
-      fi
-    fi
+    gnome-extensions disable block-caribou-36@lxylxy123456.ercli.dev
 
 # Install hhd main branch locally until reboot, helpful for hhd testing and debugging. (rename to install-hhd-dev if we unhide)
 _hhd-dev:

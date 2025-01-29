@@ -17,8 +17,4 @@ if [[ -f $HOME/.local/share/Steam/ubuntu12_32/steamui.so ]]; then
   } > "$AUTOLOGIN_CONF"
 fi
 
-if [[ $BASE_IMAGE_NAME = "kinoite" ]]; then
-  sudo -Eu $USER qdbus org.kde.Shutdown /Shutdown org.kde.Shutdown.logout
-elif [[ $BASE_IMAGE_NAME = "silverblue" ]]; then
-  sudo -Eu $USER gnome-session-quit --logout --no-prompt
-fi
+sudo -Eu $USER gnome-session-quit --logout --no-prompt

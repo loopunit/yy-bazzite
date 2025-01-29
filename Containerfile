@@ -639,7 +639,7 @@ RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
     curl -Lo /usr/share/thumbnailers/exe-thumbnailer.thumbnailer https://raw.githubusercontent.com/jlu5/icoextract/master/exe-thumbnailer.thumbnailer && \
     unzip /tmp/tilingshell/tilingshell@ferrarodomenico.com.zip -d /usr/share/gnome-shell/extensions/tilingshell@ferrarodomenico.com && \
     rm -rf /tmp/tilingshell && \
-    systemctl enable dconf-update.service \
+    systemctl enable dconf-update.service && \
     /usr/libexec/containerbuild/cleanup.sh && \
     ostree container commit
 
